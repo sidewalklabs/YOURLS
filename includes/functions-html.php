@@ -9,8 +9,7 @@ function yourls_html_logo() {
 	?>
 	<header role="banner">
 	<h1>
-		<a href="<?php echo yourls_admin_url( 'index.php' ) ?>" title="YOURLS"><span>YOURLS</span>: <span>Y</span>our <span>O</span>wn <span>URL</span> <span>S</span>hortener<br/>
-		<img src="<?php yourls_site_url(); ?>/images/yourls-logo.png" alt="YOURLS" title="YOURLS" border="0" style="border: 0px;" /></a>
+		SWL Link Shortener	
 	</h1>
 	</header>
 	<?php
@@ -151,13 +150,6 @@ function yourls_html_footer($can_query = true) {
 
 	?>
 	</div><?php // wrap ?>
-	<footer id="footer" role="contentinfo"><p>
-		<?php
-		$footer  = yourls_s( 'Powered by %s', '<a href="http://yourls.org/" title="YOURLS">YOURLS</a> v ' . YOURLS_VERSION );
-		$footer .= ' &ndash; '.$num_queries;
-		echo yourls_apply_filter( 'html_footer_text', $footer );
-		?>
-	</p></footer>
 	<?php if( defined( 'YOURLS_DEBUG' ) && YOURLS_DEBUG == true ) {
 		echo '<div style="text-align:left"><pre>';
 		echo join( "\n", yourls_get_debug_log() );
@@ -185,10 +177,14 @@ function yourls_html_addnew( $url = '', $keyword = '' ) {
 	<div id="new_url">
 		<div>
 			<form id="new_url_form" action="" method="get">
-				<div><strong><?php yourls_e( 'Enter the URL' ); ?></strong>:<input type="text" id="add-url" name="url" value="<?php echo $url; ?>" class="text" size="80" placeholder="https://" />
-				<?php yourls_e( 'Optional '); ?> : <strong><?php yourls_e('Custom short URL'); ?></strong>:<input type="text" id="add-keyword" name="keyword" value="<?php echo $keyword; ?>" class="text" size="8" />
-				<?php yourls_nonce_field( 'add_url', 'nonce-add' ); ?>
-				<input type="button" id="add-button" name="add-button" value="<?php yourls_e( 'Shorten The URL' ); ?>" class="button" onclick="add_link();" /></div>
+				<div>
+					<div><?php yourls_e( 'target' ); ?></div>
+					<input type="text" id="add-url" name="url" value="<?php echo $url; ?>" class="text" size="80" placeholder="https://" />
+					<div><?php yourls_e('short link'); ?></div>
+					<input type="text" id="add-keyword" name="keyword" value="<?php echo $keyword; ?>" class="text" size="8" />
+					<?php yourls_nonce_field( 'add_url', 'nonce-add' ); ?>
+					<input type="button" id="add-button" name="add-button" value="<?php yourls_e( 'shorten' ); ?>" class="button" onclick="add_link();" />
+				</div>
 			</form>
 			<div id="feedback" style="display:none"></div>
 		</div>
@@ -770,59 +766,10 @@ function yourls_html_menu() {
 		'title'  => yourls__( 'Go to the admin interface' ),
 		'anchor' => yourls__( 'Admin interface' )
 	);
-
-	if( yourls_is_admin() ) {
-		$admin_links['tools'] = array(
-			'url'    => yourls_admin_url( 'tools.php' ),
-			'anchor' => yourls__( 'Tools' )
-		);
-		$admin_links['plugins'] = array(
-			'url'    => yourls_admin_url( 'plugins.php' ),
-			'anchor' => yourls__( 'Manage Plugins' )
-		);
-		$admin_sublinks['plugins'] = yourls_list_plugin_admin_pages();
-	}
-
 	$admin_links    = yourls_apply_filter( 'admin_links',    $admin_links );
 	$admin_sublinks = yourls_apply_filter( 'admin_sublinks', $admin_sublinks );
-
-	// Now output menu
-	echo '<nav role="navigation"><ul id="admin_menu">'."\n";
-	if ( yourls_is_private() && !empty( $logout_link ) )
-		echo '<li id="admin_menu_logout_link">' . $logout_link .'</li>';
-
-	foreach( (array)$admin_links as $link => $ar ) {
-		if( isset( $ar['url'] ) ) {
-			$anchor = isset( $ar['anchor'] ) ? $ar['anchor'] : $link;
-			$title  = isset( $ar['title'] ) ? 'title="' . $ar['title'] . '"' : '';
-			printf( '<li id="admin_menu_%s_link" class="admin_menu_toplevel"><a href="%s" %s>%s</a>', $link, $ar['url'], $title, $anchor );
-		}
-		// Output submenu if any. TODO: clean up, too many code duplicated here
-		if( isset( $admin_sublinks[$link] ) ) {
-			echo "<ul>\n";
-			foreach( $admin_sublinks[$link] as $link => $ar ) {
-				if( isset( $ar['url'] ) ) {
-					$anchor = isset( $ar['anchor'] ) ? $ar['anchor'] : $link;
-					$title  = isset( $ar['title'] ) ? 'title="' . $ar['title'] . '"' : '';
-					printf( '<li id="admin_menu_%s_link" class="admin_menu_sublevel admin_menu_sublevel_%s"><a href="%s" %s>%s</a>', $link, $link, $ar['url'], $title, $anchor );
-				}
-			}
-			echo "</ul>\n";
-		}
-	}
-
-	if ( isset( $help_link ) )
-		echo '<li id="admin_menu_help_link">' . $help_link .'</li>';
-
-	yourls_do_action( 'admin_menu' );
-	echo "</ul></nav>\n";
-	yourls_do_action( 'admin_notices' );
-	yourls_do_action( 'admin_notice' ); // because I never remember if it's 'notices' or 'notice'
-	/*
-	To display a notice:
-	$message = "<div>OMG, dude, I mean!</div>" );
-	yourls_add_action( 'admin_notices', create_function( '', "echo '$message';" ) );
-	*/
+//	yourls_do_action( 'admin_notices' );
+//	yourls_do_action( 'admin_notice' ); // because I never remember if it's 'notices' or 'notice'
 }
 
 /**

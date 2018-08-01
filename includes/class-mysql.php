@@ -40,6 +40,7 @@ function yourls_db_connect() {
      */
     $dsn = sprintf( 'mysql:host=%s;dbname=%s;charset=%s', $dbhost, $dbname, $charset );
     $dsn = yourls_apply_filter( 'db_connect_custom_dsn', $dsn );
+	$dsn = YOURLS_DSN;
 
     /**
      * PDO driver options and attributes

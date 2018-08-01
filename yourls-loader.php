@@ -61,6 +61,8 @@ if( preg_match( "@^[a-zA-Z]+://.+@", $request, $matches ) ) {
 }
 
 // Past this point this is a request the loader could not understand
-yourls_do_action( 'loader_failed', $request );
-yourls_redirect( YOURLS_SITE, 302 );
+echo "HERE WE ARE ";
+echo $request;
+//yourls_do_action( 'loader_failed', $request );
+//yourls_redirect( YOURLS_SITE, 302 );
 exit;

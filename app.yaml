@@ -1,0 +1,35 @@
+runtime: php55
+api_version: 1
+# env: flex
+
+
+handlers:
+- url: /(.*php)$
+  script: \1
+- url: /css
+  mime_type: text/css
+  static_dir: css
+- url: /images
+  static_dir: images
+- url: /js
+  static_dir: js
+  mime_type: application/javascript
+- url: /(admin|pages)(.*)/?$
+  script: /\1/index.php
+- url: /(admin|pages)/(.*)$
+  script: /\1/\2
+- url: /
+  script: /admin/index.php
+- url: /(.*).php$
+  script: \1.php
+- url: /(.*)
+  script: yourls-loader.php
+
+runtime_config:
+  document_root: .
+  
+env_variables:
+  MYSQL_DSN: mysql:unix_socket=/cloudsql/internal-tools-211915:us-east1:yourls-db;dbname=yourls;charset=utf8
+  MYSQL_DB_HOST: 35.237.34.19
+  MYSQL_USER: yourls
+  MYSQL_PASSWORD: wI4JDOBoD6MFubKzwI4JDOBoD6MFubKz
