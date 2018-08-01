@@ -313,7 +313,6 @@ if ( !$is_bookmark ) {
 
 yourls_do_action( 'admin_page_before_table' );
 
-yourls_table_head();
 
 if ( !$is_bookmark ) {
 	$params = array(
@@ -334,6 +333,7 @@ if ( !$is_bookmark ) {
 	yourls_html_tfooter( $params );
 }
 
+yourls_table_head();
 yourls_table_tbody_start();
 
 // Main Query
@@ -365,7 +365,7 @@ yourls_do_action( 'admin_page_after_table' );
 
 if ( $is_bookmark )
 	yourls_share_box( $url, $return['shorturl'], $title, $text );
-
+?><div id='foot'><?php
 if ( !$is_bookmark ) { ?>
 	<p><?php echo $search_sentence; ?></p>
 	<p><?php
@@ -376,4 +376,5 @@ if ( !$is_bookmark ) { ?>
 <?php }
 ?>
 <p id="overall_tracking"><?php printf( yourls__( 'Overall, tracking <strong class="increment">%1$s</strong> links, <strong>%2$s</strong> clicks, and counting!' ), yourls_number_format_i18n( $total_urls ), yourls_number_format_i18n( $total_clicks ) ); ?></p>
+</div>
 <?php yourls_html_footer( ); ?>

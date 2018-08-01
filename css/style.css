@@ -1,98 +1,130 @@
-/*
- body {
- 	font-family: sans-serif;
-	font-size: 12px;
-	margin-top:0px;
-	padding-top:10px;
+a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,output,p,pre,q,ruby,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video{margin:0;padding:0;border:0;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:'';content:none}table{border-collapse:collapse;border-spacing:0}
+
+body {font-family: circular-pro,Helvetica,Arial,sans-serif;background: #505050;color: #eee;}
+
+
+div#wrap {
+    margin: 16px;
 }
-#wrap {
-	max-width:950px;
-	min-height:150px;
-	margin:0 auto;
-	background:white;
-	text-align:left;
-	padding:5px 20px 10px 20px;
-}
-.hide-if-no-js {display: none;}
-div, p, td {
-	font-family: Verdana, Arial;
-	font-size: 12px;
-}
-a, a:link, a:active, a:visited {
-	text-decoration: none;
-}
-a:hover {
-	text-decoration: underline;
-}
+
 header {
-	display: none;
+    font-size: 64px;
+    text-align: center;
+    color: #ffd02b;
 }
-nav {
-	display: none;
+
+div#new_url, div#filter_box {
+    margin: 32px auto;
+    background: #fff;
+    padding: 32px;
+    border-radius: 2px;
+    box-shadow: 2px 2px 2px 2px black;
+    color: #333;
+    max-width:1024px;
 }
-#overall_tracking {
-	display: none;
+
+form#new_url_form div {
+    margin: 8px 0;
+    color: #333;
 }
-tt {
-	padding:0 2px;		
+input[type=button], input[type=submit] {
+    margin: 16px 0;
+    border: 1px solid black;
+    font-size: 24px;
+    padding: 8px 16px;
 }
+input[type=button]:hover, input[type=submit]:hover {
+	background: #eee;
+	cursor: pointer;
+}
+
+#new_url_form input[type=text] {
+    line-height: 24px;
+    font-size: 24px;
+    padding: 4px;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    width: calc(100% - 16px);
+    font-family: monospace;
+}
+
+h1 {
+    margin: 32px;
+}
+
+h3 {
+    font-size: 24px;
+    font-weight: 100;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 16px;
+}
+
+#filter_options div {
+    margin: 8px 0;
+}
+
+input.text[name=search] {
+    width: 200px;
+}
+
+#filter_box input, #filter_box select {
+    border-radius: 2px;
+    border: 1px solid #cccc;
+    font-size: 14px;
+}
+
+span.leadin {
+    position: absolute;
+    font-size: 32px;
+    color: #777;
+    padding: 4px;
+    font-family: monospace;
+}
+
+form#new_url_form input#add-keyword {
+    padding-left: 80px;
+    width: calc(100% - 16px - 77px);
+}
+
+div#filter_buttons {
+	float: none;
+}
+
+div#filter_buttons input[type=button], div#filter_buttons input[type=submit]{
+	float: none;
+	margin: 8px 0;
+}
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 p {
-	display: none;
+    margin: 8px 0;
 }
-input, textarea {
+
+div#foot {
+    margin: 32px auto;
+    max-width: calc(1024px + 64px);
+    color: #aaa;
 }
-Input.text, select, textarea {
-	font-family: Verdana, Arial;
-	font-size: 10px;
-	color: #595441;
-	background-color: #FFFFFF;
-	border: 1px solid #88c0eb;
-	margin:1px;
+.notice {
+	border:1px solid #2a85b3;
+	background: #F3FAFD;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	width:70%;
+	margin-left:15%;
+	padding-left:10px;
+	margin-bottom:5px;
 }
-input.button {
-	font-family: sans-serif;
-	font-size: 12px;
-	color: #23211b;
-	font-weight: bold;
-	border: 1px solid #052b48;
-	cursor:pointer;
-}
-input.primary {
-	border:2px solid #2A85B3;
-	background:#fafafe;
-}
-input.text:focus, textarea:focus {
-	border:2px solid #2A85B3;
-	margin:0px;
-}
-tr.edit-row  td {
-	background:#e3f3ff !important;
-}
-#new_url {
-	padding:1px;
-	clear:both;
-}
-#new_url div {
-	padding:4px;
-}
-#new_url_form {
-	padding:4px;
-}
-#new_url #feedback {
-	background:#ff8;
-	color:#88c0eb;
-	width:50%;
-	margin:0px 25%;
-	padding:2px;
-	border:1px solid #ff8;
-}
-#new_url #feedback .fail {
-	color:#f55;
-}
-#add-url {width:400px}
-td.url small a{
-	color:#bbc;
-}
+
+
 body.desktop td.actions input,body.desktop  td.actions a {
 	visibility:hidden;
 }
@@ -148,86 +180,9 @@ td.actions .button_delete {
 td.actions .button_stats {
 	background:transparent url(../images/chart_bar.png) 2px center no-repeat;
 }
-#main_table tfoot th, #main_table tfoot th div {
-	font-size:10px;
-}
-.error {
-	color: red;
-	background:#fee;
-}
-.warning {
-	color: orange;
-	background:#ffe9bf;
-}
-.success {
-	color: green;
-	background:#efe;
-}
-#login {
-	width: 300px;
-	margin: 200px auto 0px auto;
-}
-#login p{
-	font-weight: bold;
-}
-#login .text {
-	width: 100%;
-}
-#login ul {
-	padding-left:0px;
-	list-style-type:none;
-	text-indent:0;
-}
-#login ul li {
-	padding:0 0 5px 20px;
-}
-#login ul.error li {
-	background:transparent url(../images/cancel.png) top left no-repeat;
-}
-#login ul.warning li {
-	background:transparent url(../images/error.png) top left no-repeat;
-}
-#login ul.success li {
-	background:transparent url(../images/accept.png) top left no-repeat;
-}
-.sub_wrap {
-	max-width:580px;
-	padding-bottom:30px;
-	text-align:justify;
-}
-.sub_wrap span {
-	background:#ffa;
-	padding:0 2px;
-}
-a.bookmarklet {
-	border:2px solid #2a85b3;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
-	border-radius:3px;
-	padding:5px 5px 5px 20px;
-	background:#eef url(../images/favicon.gif) 2px center no-repeat;
-	margin:3px;
-	display:inline-block;
-}
-a.bookmarklet:hover {
-	text-decoration:none;
-	background-position:3px center;
-}
-#footer {
-	display: none;
-}
 
-.notice {
-	border:1px solid #2a85b3;
-	background: #F3FAFD;
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	border-radius:6px;
-	width:70%;
-	margin-left:15%;
-	padding-left:10px;
-	margin-bottom:5px;
-}
+
+
 
 
 .jquery-notify-bar {
@@ -274,4 +229,3 @@ a.bookmarklet:hover {
 tr.plugin.active a{ font-weight:bolder;}
 body.desktop tr.plugin td.plugin_desc small{ visibility:hidden;}
 tr:hover.plugin td.plugin_desc small{ visibility:visible;}
-*/

@@ -1,17 +1,23 @@
 /* jQuery Table Sorter */
+div#tableholder {
+    max-width: calc(1024px + 64px);
+    margin: 0 auto;
+    background: white;
+    box-shadow: 2px 2px 2px 2px black;
+}
 table.tblSorter {
-	font-family:Verdana, Arial;
+	font-family: sans-serif;
 	background-color: #CDCDCD;
-	margin:10px 0px 0px;
-	font-size: 8pt;
+	font-size: 13pt;
 	width: 100%;
 	text-align: left;
 }
 table.tblSorter thead tr th, table.tblSorter tfoot tr th, table.tblSorter th.header {
-	background-color: #C7E7FF;
+	background-color: #656565;
 	border: 1px solid #FFF;
-	font-size: 8pt;
+	font-size: 10pt;
 	padding: 4px;
+	font-weight: 600;
 }
 table.tblSorter tfoot tr th {
 	background-color: #E3F3FF;
@@ -34,16 +40,16 @@ table.tblSorter tbody td {
 	vertical-align: top;
 }
 table.tblSorter tbody tr.normal-row td {
-	background: #F1F9FF;
+	background: #fff0bb;
 }
 table.tblSorter tbody tr.alt-row td {
 
 }
 table.tblSorter tbody tr.normal-row:hover td  {
-	background-color:#F1FFF6;
+	background-color: #f7e298;
 }
 table.tblSorter tbody tr.alt-row:hover td  {
-	background-color:#F1FFF6;
+	background-color: #fbf6dd;
 }
 table.tblSorter thead tr .tablesorter-headerDesc {
 	background-image: url('../images/desc.gif');
@@ -56,7 +62,7 @@ table.tblSorter thead tr .tablesorter-headerAsc {
 	background-position: center right;
 }
 table.tblSorter thead tr .tablesorter-headerAsc, table.tblSorter thead tr .tablesorter-headerDesc {
-	background-color: #91C7F2;
+	background-color: #9e821d;
 }
 table.tblSorter tfoot tr {
 	background-color: #BCD9E8;

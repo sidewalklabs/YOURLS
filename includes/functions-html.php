@@ -73,7 +73,7 @@ function yourls_html_head( $context = 'index', $title = '' ) {
 	$bodyclass .= ( yourls_is_mobile_device() ? 'mobile' : 'desktop' );
 
 	// Page title
-	$_title = 'YOURLS &mdash; Your Own URL Shortener | ' . yourls_link();
+	$_title = 'SWL/ | ' . yourls_link();
 	$title = $title ? $title . " &laquo; " . $_title : $_title;
 	$title = yourls_apply_filter( 'html_title', $title, $context );
 
@@ -175,13 +175,14 @@ function yourls_html_addnew( $url = '', $keyword = '' ) {
 	?>
 	<main role="main">
 	<div id="new_url">
+		<h3> create a new link </h3>
 		<div>
 			<form id="new_url_form" action="" method="get">
 				<div>
 					<div><?php yourls_e( 'target' ); ?></div>
 					<input type="text" id="add-url" name="url" value="<?php echo $url; ?>" class="text" size="80" placeholder="https://" />
 					<div><?php yourls_e('short link'); ?></div>
-					<input type="text" id="add-keyword" name="keyword" value="<?php echo $keyword; ?>" class="text" size="8" />
+					<span class="leadin"> swl/ </span> <input type="text" id="add-keyword" name="keyword" value="<?php echo $keyword; ?>" class="text" size="8" />
 					<?php yourls_nonce_field( 'add_url', 'nonce-add' ); ?>
 					<input type="button" id="add-button" name="add-button" value="<?php yourls_e( 'shorten' ); ?>" class="button" onclick="add_link();" />
 				</div>
@@ -219,12 +220,10 @@ function yourls_html_tfooter( $params = array() ) {
     $date_second  = $params['date_second'];
 
 	?>
-	<tfoot>
-		<tr>
-			<th colspan="6">
-			<div id="filter_form">
+			<div id="filter_box">
 				<form action="" method="get">
 					<div id="filter_options">
+						<h3> search links </h3>
 						<?php
 
 						// First search control: text to search
@@ -238,9 +237,9 @@ function yourls_html_tfooter( $params = array() ) {
 						);
 						$_select = yourls_html_select( 'search_in', $_options, $search_in );
 						/* //translators: "Search for <input field with text to search> in <select dropdown with URL, title...>" */
+						echo "<div>";
 						yourls_se( 'Search for %1$s in %2$s', $_input , $_select );
-						echo "&ndash;\n";
-
+						echo "</div><div>";
 						// Second search control: order by
 						$_options = array(
 							'keyword'      => yourls__( 'Short URL' ),
@@ -259,12 +258,12 @@ function yourls_html_tfooter( $params = array() ) {
 						$_select2 = yourls_html_select( 'sort_order', $_options, $sort_order );
 						/* //translators: "Order by <criteria dropdown (date, clicks...)> in <order dropdown (Descending or Ascending)>" */
 						yourls_se( 'Order by %1$s %2$s', $_select , $_select2 );
-						echo "&ndash;\n";
+						echo "</div><div>";
 
 						// Third search control: Show XX rows
 						/* //translators: "Show <text field> rows" */
 						yourls_se( 'Show %s rows',  '<input type="text" name="perpage" class="text" size="2" value="' . $perpage . '" />' );
-						echo "<br/>\n";
+						echo "</div><div>";
 
 						// Fourth search control: Show links with more than XX clicks
 						$_options = array(
@@ -275,7 +274,7 @@ function yourls_html_tfooter( $params = array() ) {
 						$_input  = '<input type="text" name="click_limit" class="text" size="4" value="' . $click_limit . '" /> ';
 						/* //translators: "Show links with <more/less> than <text field> clicks" */
 						yourls_se( 'Show links with %1$s than %2$s clicks', $_select, $_input );
-						echo "<br/>\n";
+						echo "</div><div>";
 
 						// Fifth search control: Show links created before/after/between ...
 						$_options = array(
@@ -289,11 +288,11 @@ function yourls_html_tfooter( $params = array() ) {
 						$_input2 = '<input type="text" name="date_second" id="date_second" class="text" size="12" value="' . $date_second . '"' . ( $date_filter === 'between' ? ' style="display:inline"' : '' ) . '/>';
 						/* //translators: "Show links created <before/after/between> <date input> <"and" if applicable> <date input if applicable>" */
 						yourls_se( 'Show links created %1$s %2$s %3$s %4$s', $_select, $_input, $_and, $_input2 );
+						echo "</div>";
 						?>
 
 						<div id="filter_buttons">
 							<input type="submit" id="submit-sort" value="<?php yourls_e('Search'); ?>" class="button primary" />
-							&nbsp;
 							<input type="button" id="submit-clear-filter" value="<?php yourls_e('Clear'); ?>" class="button" onclick="window.parent.location.href = 'index.php'" />
 						</div>
 
@@ -342,10 +341,7 @@ function yourls_html_tfooter( $params = array() ) {
 				<?php } ?>
 				</span>
 			</div>
-			</th>
-		</tr>
-		<?php yourls_do_action( 'html_tfooter' ); ?>
-	</tfoot>
+
 	<?php
 }
 
@@ -379,69 +375,7 @@ function yourls_html_select( $name, $options, $selected = '', $display = false )
  *
  */
 function yourls_share_box( $longurl, $shorturl, $title = '', $text='', $shortlink_title = '', $share_title = '', $hidden = false ) {
-	if ( $shortlink_title == '' )
-		$shortlink_title = '<h2>' . yourls__( 'Your short link' ) . '</h2>';
-	if ( $share_title == '' )
-		$share_title = '<h2>' . yourls__( 'Quick Share' ) . '</h2>';
-
-	// Allow plugins to short-circuit the whole function
-	$pre = yourls_apply_filter( 'shunt_share_box', false );
-	if ( false !== $pre )
-		return $pre;
-
-	$text   = ( $text ? '"'.$text.'" ' : '' );
-	$title  = ( $title ? "$title " : '' );
-	$share  = yourls_esc_textarea( $title.$text.$shorturl );
-	$count  = 140 - strlen( $share );
-	$hidden = ( $hidden ? 'style="display:none;"' : '' );
-
-	// Allow plugins to filter all data
-	$data = compact( 'longurl', 'shorturl', 'title', 'text', 'shortlink_title', 'share_title', 'share', 'count', 'hidden' );
-	$data = yourls_apply_filter( 'share_box_data', $data );
-	extract( $data );
-
-	$_share = rawurlencode( $share );
-	$_url   = rawurlencode( $shorturl );
-	?>
-
-	<div id="shareboxes" <?php echo $hidden; ?>>
-
-		<?php yourls_do_action( 'shareboxes_before', $longurl, $shorturl, $title, $text ); ?>
-
-		<div id="copybox" class="share">
-		<?php echo $shortlink_title; ?>
-			<p><input id="copylink" class="text" size="32" value="<?php echo yourls_esc_url( $shorturl ); ?>" /></p>
-			<p><small><?php yourls_e( 'Long link' ); ?>: <a id="origlink" href="<?php echo yourls_esc_url( $longurl ); ?>"><?php echo yourls_esc_url( $longurl ); ?></a></small>
-			<?php if( yourls_do_log_redirect() ) { ?>
-			<br/><small><?php yourls_e( 'Stats' ); ?>: <a id="statlink" href="<?php echo yourls_esc_url( $shorturl ); ?>+"><?php echo yourls_esc_url( $shorturl ); ?>+</a></small>
-			<input type="hidden" id="titlelink" value="<?php echo yourls_esc_attr( $title ); ?>" />
-			<?php } ?>
-			</p>
-		</div>
-
-		<?php yourls_do_action( 'shareboxes_middle', $longurl, $shorturl, $title, $text ); ?>
-
-		<div id="sharebox" class="share">
-			<?php echo $share_title; ?>
-			<div id="tweet">
-				<span id="charcount" class="hide-if-no-js"><?php echo $count; ?></span>
-				<textarea id="tweet_body"><?php echo $share; ?></textarea>
-			</div>
-			<p id="share_links"><?php yourls_e( 'Share with' ); ?>
-				<a id="share_tw" href="http://twitter.com/home?status=<?php echo $_share; ?>" title="<?php yourls_e( 'Tweet this!' ); ?>" onclick="share('tw');return false">Twitter</a>
-				<a id="share_fb" href="http://www.facebook.com/share.php?u=<?php echo $_url; ?>" title="<?php yourls_e( 'Share on Facebook' ); ?>" onclick="share('fb');return false;">Facebook</a>
-				<?php
-				yourls_do_action( 'share_links', $longurl, $shorturl, $title, $text );
-				// Note: on the main admin page, there are no parameters passed to the sharebox when it's drawn.
-				?>
-			</p>
-		</div>
-
-		<?php yourls_do_action( 'shareboxes_after', $longurl, $shorturl, $title, $text ); ?>
-
-	</div>
-
-	<?php
+	echo "";
 }
 
 /**
@@ -575,7 +509,7 @@ function yourls_table_add_row( $keyword, $url, $title = '', $ip, $clicks, $times
 	// Row cells: the array
 	$cells = array(
 		'keyword' => array(
-			'template'      => '<a href="%shorturl%">%keyword_html%</a>',
+			'template'      => '<a href="%shorturl%">swl/%keyword_html%</a>',
 			'shorturl'      => yourls_esc_url( $shorturl ),
 			'keyword_html'  => yourls_esc_html( $keyword ),
 		),
@@ -591,14 +525,14 @@ function yourls_table_add_row( $keyword, $url, $title = '', $ip, $clicks, $times
 			'template' => '%date%',
 			'date'     => date( 'M d, Y H:i', $timestamp +( YOURLS_HOURS_OFFSET * 3600 ) ),
 		),
-		'ip' => array(
+		/*'ip' => array(
 			'template' => '%ip%',
 			'ip'       => $ip,
 		),
 		'clicks' => array(
 			'template' => '%clicks%',
 			'clicks'   => yourls_number_format_i18n( $clicks, 0, '', '' ),
-		),
+		),*/
 		'actions' => array(
 			'template' => '%actions% <input type="hidden" id="keyword_%id%" value="%keyword%"/>',
 			'actions'  => $action_links,
@@ -651,16 +585,16 @@ class yourls_table_add_row_callback {
  *
  */
 function yourls_table_head() {
-	$start = '<table id="main_table" class="tblSorter" cellpadding="0" cellspacing="1"><thead><tr>'."\n";
+	$start = '<div id="tableholder"><table id="main_table" class="tblSorter" cellpadding="0" cellspacing="1"><thead><tr>'."\n";
 	echo yourls_apply_filter( 'table_head_start', $start );
 
 	$cells = yourls_apply_filter( 'table_head_cells', array(
 		'shorturl' => yourls__( 'Short URL' ),
 		'longurl'  => yourls__( 'Original URL' ),
 		'date'     => yourls__( 'Date' ),
-		'ip'       => yourls__( 'IP' ),
+		/*'ip'       => yourls__( 'IP' ),
 		'clicks'   => yourls__( 'Clicks' ),
-		'actions'  => yourls__( 'Actions' )
+		*/'actions'  => yourls__( 'Actions' )
 	) );
 	foreach( $cells as $k => $v ) {
 		echo "<th id='main_table_head_$k'>$v</th>\n";
@@ -691,7 +625,7 @@ function yourls_table_tbody_end() {
  *
  */
 function yourls_table_end() {
-	echo yourls_apply_filter( 'table_end', '</table></main>' );
+	echo yourls_apply_filter( 'table_end', '</table></div></main>' );
 }
 
 /**
