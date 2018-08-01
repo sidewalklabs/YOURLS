@@ -124,6 +124,10 @@ div#foot {
 	margin-bottom:5px;
 }
 
+td.edit-row {
+    line-height: 24px;
+    font-size: 12px;
+}
 
 body.desktop td.actions input,body.desktop  td.actions a {
 	visibility:hidden;
