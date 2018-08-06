@@ -215,7 +215,7 @@ yourls_html_head( 'infos', yourls_s( 'Statistics for %s', YOURLS_SITE.'/'.$keywo
 yourls_html_logo();
 yourls_html_menu();
 ?>
-
+<div id="info-card">
 <h2 id="informations"><?php echo yourls_esc_html( $title ); ?></h2>
 
 <h3><span class="label"><?php yourls_e( 'Short URL'); ?>:</span> <img src="<?php yourls_favicon() ?>"/>
@@ -551,7 +551,7 @@ yourls_html_menu();
 		<?php yourls_share_box( $longurl, yourls_link($keyword), $title, '', '<h3>' . yourls__( 'Short link' ) . '</h3>', '<h3>' . yourls__( 'Quick Share' ) . '</h3>'); ?>
 
 	</div>
-
+</div>
 </div>
 
 

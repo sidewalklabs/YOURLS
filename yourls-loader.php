@@ -18,7 +18,7 @@ if ( '/robots.txt' == $_SERVER['REQUEST_URI'] ) {
 require_once __DIR__ . '/includes/load-yourls.php';
 
 // Get request in YOURLS base (eg in 'http://sho.rt/yourls/abcd' get 'abdc')
-$request = yourls_get_request();
+$request = preg_replace("/s?-|-|s$/s","",strtolower(yourls_get_request()));
 
 // Make valid regexp pattern from authorized charset in keywords
 $pattern = yourls_make_regexp_pattern( yourls_get_shorturl_charset() );
@@ -61,8 +61,9 @@ if( preg_match( "@^[a-zA-Z]+://.+@", $request, $matches ) ) {
 }
 
 // Past this point this is a request the loader could not understand
-echo "HERE WE ARE ";
+echo "Link not found: ";
 echo $request;
+echo "<p/><a href='/'> go to shortener </a>";
 //yourls_do_action( 'loader_failed', $request );
 //yourls_redirect( YOURLS_SITE, 302 );
 exit;

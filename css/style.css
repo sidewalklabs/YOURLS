@@ -6,7 +6,6 @@ body {font-family: circular-pro,Helvetica,Arial,sans-serif;background: #505050;c
 div#wrap {
     margin: 16px;
 }
-
 header {
     font-size: 64px;
     text-align: center;
@@ -47,9 +46,23 @@ input[type=button]:hover, input[type=submit]:hover {
     width: calc(100% - 16px);
     font-family: monospace;
 }
+div#info-card {
+    max-width: 1024px;
+    margin: 32px auto;
+    background: white;
+    color: #333;
+    padding: 8px;
+}
 
 h1 {
     margin: 32px;
+}
+
+h2 {
+    font-size: 32px;
+    font-weight: 100;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 16px;	
 }
 
 h3 {
